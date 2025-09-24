@@ -1,0 +1,11 @@
+# Archivos de checkpoints / backups
+*.sav
+*.state
+*.zip
+*.monitor.csv
+*.log
+__pycache__/
+.ipynb_checkpoints/
+
+# Imágenes de mapas grandes
+*.bmp
