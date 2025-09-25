@@ -91,6 +91,8 @@ Place the **ROM** MedarotKabuto.gb and the initial save zero_state.state inside 
 
 The game ROM is not included due to copyright; add it manually in the data/ folder.
 
+![GameBanner](docs/screenshots/medarot_title.png)
+
 ## 🎯 Explore, train, and have fun with RL Medarot!
 
 
