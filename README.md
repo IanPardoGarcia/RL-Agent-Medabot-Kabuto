@@ -2,7 +2,7 @@
 
 ![Project Banner](docs\gifs\medarot_banner_shrink.gif) 
 
-<img src="/docs/gifs/medarot_banner.gif?raw=true">
+<img src="/docs/gifs/medarot_banner.gif">
 
 ## ✨ Overview
 
