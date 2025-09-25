@@ -1,11 +1,24 @@
-# Archivos de checkpoints / backups
+# === Archivos de juego y estados ===
+*.gb
 *.sav
 *.state
+
+# === Modelos entrenados y logs ===
 *.zip
 *.monitor.csv
 *.log
+logs/
+models/
+
+# === Imágenes de mapas grandes ===
+*.bmp
+
+# === Archivos temporales de Python y Jupyter ===
 __pycache__/
+*.pyc
 .ipynb_checkpoints/
 
-# Imágenes de mapas grandes
-*.bmp
+# === Datos sensibles / locales ===
+data/MedarotKabuto.gb
+data/*.state
+docs
