@@ -2,7 +2,7 @@
 
 ![Project Banner](docs\gifs\medarot_banner_shrink.gif) 
 
-<img src="docs/gifs/medarot_banner_shrink.gif" alt="Animated Banner" width="600"/>
+<img src="docs/gifs/medarot_banner_shrink.gif" alt="Animated Banner" width="600" height="156"/>
 
 ## ✨ Overview
 
