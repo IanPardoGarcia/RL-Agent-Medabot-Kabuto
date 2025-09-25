@@ -21,4 +21,3 @@ __pycache__/
 # === Datos sensibles / locales ===
 data/MedarotKabuto.gb
 data/*.state
-docs
