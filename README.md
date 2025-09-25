@@ -1,7 +1,6 @@
 # 🎮 RL Agent for Medarot – Deep Reinforcement Learning with PyBoy
 
-![Project Banner](docs\gifs\medarot_banner_shrink.gif)  
-
+![Project Banner](docs\gifs\medarot_banner_shrink.gif) 
 
 ## ✨ Overview
 
@@ -18,7 +17,7 @@ The goal is to train an agent that explores the world, interacts with NPCs, and 
 
 |  Second Map (Home Living Room)  | Agent Path on Second Map |
 |-------------------------|--------------------------|
-| ![Tensorboard](docs/screenshots/map_2.png) | ![Trajectory](docs/screenshots/trajectory_map2.png) |
+| ![Tensorboard](docs\screenshots\map_2.png) | ![Trajectory](docs\screenshots\trajectory_map2.png) |
 
 
 ## 📂 Project Structure
