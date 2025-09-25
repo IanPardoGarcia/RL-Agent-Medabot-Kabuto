@@ -3,6 +3,7 @@
 ![Project Banner](docs\gifs\medarot_banner_shrink.gif) 
 
 <img src="/docs/gifs/medarot_banner.gif?raw=true">
+
 ## ✨ Overview
 
 **RL Medarot** is a Deep Reinforcement Learning project where an agent learns to play  
