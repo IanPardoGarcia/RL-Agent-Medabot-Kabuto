@@ -16,24 +16,24 @@ The goal is to train an agent that explores the world, interacts with NPCs, and 
 
 ## 📸 Screenshots
 
-| Training in Tensorboard | Agent Path Visualization |
+|  Second Map (Home Living Room)  | Agent Path on Second Map |
 |-------------------------|--------------------------|
-| ![Tensorboard](docs/screenshots/tensorboard.png) | ![Trajectory](docs/screenshots/trajectory.png) |
+| ![Tensorboard](docs/screenshots/map_2.png) | ![Trajectory](docs/screenshots/trajectory_map2.png) |
 
 
 ## 📂 Project Structure
 
 RLMEDA/
-├─ env/ # Custom Gym environment (GenericPyBoyEnv)
-├─ training/ # PPO / A2C training scripts
-├─ evaluation/ # Evaluation & trajectory visualization
-├─ notebooks/ # Jupyter notebooks for quick experiments
-├─ data/ # ROM and state files (not versioned)
-├─ logs/ # Tensorboard logs (gitignored)
-├─ models/ # Trained models (gitignored)
-├─ docs/screenshots/ # Images for this README
-├─ requirements.txt
-└─ README.md
+- data/ # ROM and state files (not versioned)
+- env/ # Custom Gym environment (GenericPyBoyEnv)
+- evaluation/ # Evaluation & trajectory visualization
+- logs/ # Tensorboard logs
+- notebooks/ # Jupyter notebooks for quick experiments
+- training/ # PPO / A2C training scripts
+- models/ # Trained models (gitignored)
+- docs # Multimedia (gitignored)
+- requirements.txt
+- README.md
 
 ## 🛠️ Requirements
 
