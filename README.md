@@ -53,6 +53,40 @@ Contents of requirements.txt:
 
 - Train the agent with **PPO**: python training/training_ppo.py
 
+### Remote-friendly PPO (v2)
+
+A safer, remote-friendly training entrypoint is provided at `training/training_ppo_v2.py`.
+This script uses conservative defaults (single env, CPU by default, checkpointing) so you can run training on a remote machine or cloud VM without overheating your local workstation.
+
+Basic usage:
+
+PowerShell (quick smoke run):
+
+```powershell
+python .\training\training_ppo_v2.py --smoke
+```
+
+Start a longer training run on a remote server (example):
+
+```powershell
+# on remote machine (SSH/session)
+python ./training/training_ppo_v2.py --num-envs 2 --total-timesteps 200000 --checkpoint-freq 10000 --device cpu
+```
+
+Key flags:
+- `--num-envs`: how many parallel environments to run (default 1)
+- `--use-subproc`: use SubprocVecEnv (only for machines with spare CPU/memory)
+- `--total-timesteps`: total timesteps to train
+- `--checkpoint-freq`: how often to save intermediate models (in steps)
+- `--device`: `cpu` or `cuda`
+
+Tips for remote training:
+- Prefer running on a separate remote machine or cloud instance. Use `--device cpu` unless you have GPU access on the remote host.
+- Keep `--num-envs` small (1-4) on constrained machines to avoid high memory/CPU usage.
+- Use `--checkpoint-freq` to frequently persist progress so you can safely interrupt or transfer checkpoints.
+- Redirect logs to remote storage or mount a network drive to avoid filling the remote root volume.
+
+
 - Train the agent with **A2C** (evaluation script provided): python training/training_a2c.py
 
 Models are saved in `models/` and logs under `logs/` by default.
@@ -126,6 +160,11 @@ Run the smoke tests locally:
 ```powershell
 python -c "import runpy; runpy.run_path('tests/test_generic_env.py', run_name='__main__')"
 python -c "import runpy; runpy.run_path('tests/smoke_env.py', run_name='__main__')"
+
+## 🧪 Google Colab quickstart
+
+There is a ready-to-run Colab notebook at `notebooks/Run_PPO_v2_Colab.ipynb` that mounts Google Drive, installs dependencies, copies the ROM and state from Drive into `data/`, and runs the `training/training_ppo_v2.py` smoke test saving checkpoints to Drive. Upload `MedarotKabuto.gb` and `zero_state.state` into a folder on your Drive (e.g. `MyDrive/medarot/`) before running the notebook.
+
 ```
 
 
