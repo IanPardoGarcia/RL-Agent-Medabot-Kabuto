@@ -33,7 +33,7 @@ def make_env_fn(rom_path: Path = ROM_PATH, render: bool = False) -> Callable:
             raise FileNotFoundError(f"ROM not found: {rom_path}. Place the ROM in the data/ folder.")
         # Each environment creates its own PyBoy instance. Keep num_envs small by default.
         pyboy = PyBoy(str(rom_path))
-        env = GenericPyBoyEnv(pyboy, debug=False, render_mode=None, state_path=STATE_PATH, window_type="headless")
+        env = GenericPyBoyEnv(pyboy, debug=False, render_mode=None, state_path=STATE_PATH)
         LOG_DIR.mkdir(parents=True, exist_ok=True)
         return Monitor(env, filename=str(LOG_DIR / "monitor.csv"))
 
