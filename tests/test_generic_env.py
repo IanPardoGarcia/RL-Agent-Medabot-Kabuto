@@ -1,6 +1,4 @@
-import numpy as np
-from pathlib import Path
-from env.generic_env import GenericPyBoyEnv, ACTIONS
+from env.generic_env import GenericPyBoyEnv
 
 
 class DummyPyBoy:
@@ -45,7 +43,7 @@ def test_generic_env_observation_and_step(tmp_path):
     assert arr.shape == (4,)
     assert arr[0] == 16
 
-    # step with first action
+    # step with first action (index 0 -> ACTIONS[0] == 'a')
     next_obs, reward, terminated, truncated, _ = env.step(0)
     assert isinstance(reward, float)
     assert isinstance(terminated, bool)

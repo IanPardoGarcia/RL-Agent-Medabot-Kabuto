@@ -107,4 +107,25 @@ The game ROM is not included due to copyright; add it manually in the data/ fold
 
 ## 🎯 Explore, train, and have fun with RL Medarot!
 
+## 📜 License & CI
+
+This project is released under the MIT License. See the `LICENSE` file for details.
+
+There is a lightweight GitHub Actions workflow at `.github/workflows/ci.yml` that runs the environment smoke tests and basic lint checks on push/PR to `main`. The CI installs minimal dependencies (numpy, gymnasium) to avoid pulling heavy ML frameworks.
+
+## 🧰 Developer setup
+
+Install dev dependencies for linting and tests:
+
+```powershell
+pip install -r requirements-dev.txt
+```
+
+Run the smoke tests locally:
+
+```powershell
+python -c "import runpy; runpy.run_path('tests/test_generic_env.py', run_name='__main__')"
+python -c "import runpy; runpy.run_path('tests/smoke_env.py', run_name='__main__')"
+```
+
 

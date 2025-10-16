@@ -1,17 +1,17 @@
 """Simple smoke test that exercises GenericPyBoyEnv using a DummyPyBoy (no ROM required).
 Run: python tests/smoke_env.py
+
+Note: This is a lightweight manual smoke test. In CI we run a similar script but avoid
+heavy dependencies like PyBoy; this test uses a DummyPyBoy and a temporary state file.
 """
-from pathlib import Path
 import sys
+from pathlib import Path
 from pathlib import Path as _Path
-# ensure project root is importable when running this script from tests/ directory
+
+# ensure project root is importable when running this script from tests/
 PROJECT_ROOT = str(_Path(__file__).resolve().parents[1])
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
-
-from env.generic_env import GenericPyBoyEnv
-
-
 class DummyPyBoy:
     def __init__(self):
         self.memory = bytearray(0xFFFF)
@@ -38,6 +38,9 @@ def main():
     tests_dir = Path(__file__).resolve().parent
     state_file = tests_dir / "dummy_zero_state.state"
     state_file.write_bytes(b"dummy")
+
+    # import env after ensuring project root is on sys.path
+    from env.generic_env import GenericPyBoyEnv
 
     dummy = DummyPyBoy()
     env = GenericPyBoyEnv(dummy, debug=True, render_mode=False, state_path=state_file)

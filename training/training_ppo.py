@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from pyboy import PyBoy
@@ -23,10 +22,13 @@ MODEL_DIR = ROOT / "models"
 
 def make_env(rom_path: Path = ROM_PATH):
     def _init():
+        # Each subprocess will create its own PyBoy instance. This is resource intensive
+        # — ensure your system can handle `num_envs` separate emulator instances.
         if not rom_path.exists():
             raise FileNotFoundError(f"ROM not found: {rom_path}. Place the ROM in the data/ folder.")
         pyboy = PyBoy(str(rom_path))
         env = GenericPyBoyEnv(pyboy, debug=False, render_mode=False)
+        # Keep only the 'info' array for the policy input
         env = TransformObservation(
             env,
             lambda obs: {"info": obs["info"]},
@@ -40,11 +42,14 @@ def make_env(rom_path: Path = ROM_PATH):
 
 def main():
     num_envs = 4
+    # SubprocVecEnv runs multiple independent envs in subprocesses. This helps
+    # collect diverse rollouts in parallel but increases memory/cpu usage.
     vec_env = SubprocVecEnv([make_env() for _ in range(num_envs)])
 
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
     TBOARD_DIR.mkdir(parents=True, exist_ok=True)
 
+    # NOTE: hyperparameters below were chosen empirically; adjust as needed.
     model = PPO(
         MultiInputPolicy,
         vec_env,
@@ -59,6 +64,7 @@ def main():
         tensorboard_log=str(TBOARD_DIR),
     )
 
+    # Start learning — this can take a long time depending on timesteps and env speed.
     model.learn(total_timesteps=750_000)
     model.save(str(MODEL_DIR / "ppo_medarot"))
 

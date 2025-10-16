@@ -1,3 +1,4 @@
+import argparse
 from pyboy import PyBoy
 from gymnasium.wrappers import TransformObservation
 from stable_baselines3 import PPO
@@ -6,10 +7,9 @@ from gymnasium.spaces import Box, Dict
 import numpy as np
 from env.generic_env import GenericPyBoyEnv
 
-model = PPO.load("ppo_medarot")
 
-def make_env():
-    pyboy = PyBoy("MedarotKabuto.gb")
+def make_env(rom_path: str = "MedarotKabuto.gb"):
+    pyboy = PyBoy(rom_path)
     env = GenericPyBoyEnv(pyboy, debug=False, render_mode=False)
     env = TransformObservation(env,
         lambda obs: {"info": obs["info"]},
@@ -17,19 +17,40 @@ def make_env():
     )
     return Monitor(env)
 
-num_episodes = 100
-rewards = []
-eval_env = make_env()
 
-for ep in range(num_episodes):
-    obs, _ = eval_env.reset()
-    total = 0
-    done = False
-    while not done:
-        action, _ = model.predict(obs)
-        obs, reward, done, truncated, _ = eval_env.step(action)
-        total += reward
-    rewards.append(total)
-    print(f"Episodio {ep+1}: {total}")
+def evaluate(model_path: str = "ppo_medarot", rom_path: str = "MedarotKabuto.gb", num_episodes: int = 100):
+    """Load the model and run num_episodes episodes, returning the rewards list."""
+    model = PPO.load(model_path)
+    eval_env = make_env(rom_path)
 
-print("Recompensa promedio:", np.mean(rewards))
+    rewards = []
+    for ep in range(num_episodes):
+        obs, _ = eval_env.reset()
+        total = 0
+        done = False
+        while not done:
+            action, _ = model.predict(obs)
+            obs, reward, done, truncated, _ = eval_env.step(action)
+            total += reward
+        rewards.append(total)
+        print(f"Episode {ep+1}: {total}")
+
+    print("Average reward:", np.mean(rewards))
+    return rewards
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", default="ppo_medarot",
+                        help="Path to the trained model")
+    parser.add_argument("--rom", default="MedarotKabuto.gb",
+                        help="Path to ROM file")
+    parser.add_argument("--episodes", type=int, default=100,
+                        help="Number of episodes to run")
+    args = parser.parse_args()
+    evaluate(model_path=args.model, rom_path=args.rom,
+             num_episodes=args.episodes)
+
+
+if __name__ == "__main__":
+    main()

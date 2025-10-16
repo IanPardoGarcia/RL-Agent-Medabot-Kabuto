@@ -1,42 +1,46 @@
 """Smoke test that runs a tiny PPO training on a mock environment to verify training loop works.
 Run: python tests/smoke_training.py
+
+This test is intended for local development. It will skip automatically if
+`stable-baselines3` is not installed (so CI can avoid installing heavy ML frameworks).
 """
 import sys
 import numpy as np
 from pathlib import Path as _Path
+
 # ensure project root is importable when running from tests/
 PROJECT_ROOT = str(_Path(__file__).resolve().parents[1])
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from gymnasium import Env
-from gymnasium.spaces import Discrete, Box
-
-
-class DummyEnv(Env):
-    def __init__(self):
-        super().__init__()
-        self.observation_space = Box(low=0, high=1, shape=(4,), dtype=np.float32)
-        self.action_space = Discrete(2)
-        self._step = 0
-
-    def reset(self, seed=None, **kwargs):
-        self._step = 0
-        return np.zeros(4, dtype=np.float32), {}
-
-    def step(self, action):
-        self._step += 1
-        obs = np.random.rand(4).astype(np.float32)
-        reward = 1.0
-        terminated = self._step >= 5
-        truncated = False
-        return obs, float(reward), terminated, truncated, {}
-
-    def close(self):
-        pass
-
 
 def main():
+    # import heavy/third-party modules after ensuring project root is on sys.path
+    from gymnasium import Env
+    from gymnasium.spaces import Discrete, Box
+
+    class DummyEnv(Env):
+        def __init__(self):
+            super().__init__()
+            self.observation_space = Box(low=0, high=1, shape=(4,), dtype=np.float32)
+            self.action_space = Discrete(2)
+            self._step = 0
+
+        def reset(self, seed=None, **kwargs):
+            self._step = 0
+            return np.zeros(4, dtype=np.float32), {}
+
+        def step(self, action):
+            self._step += 1
+            obs = np.random.rand(4).astype(np.float32)
+            reward = 1.0
+            terminated = self._step >= 5
+            truncated = False
+            return obs, float(reward), terminated, truncated, {}
+
+        def close(self):
+            pass
+
     try:
         from stable_baselines3 import PPO
         from stable_baselines3.common.env_util import make_vec_env
