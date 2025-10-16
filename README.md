@@ -51,11 +51,18 @@ Contents of requirements.txt:
 ## 🚀 Quick Start
 ### 1️⃣ Training
 
-- Train the agent with **PPO**: python training/train_ppo.py
+- Train the agent with **PPO**: python training/training_ppo.py
 
-- Train the agent with **A2C**: python training/train_a2c.py
+- Train the agent with **A2C** (evaluation script provided): python training/training_a2c.py
 
-Models are saved in models/.
+Models are saved in `models/` and logs under `logs/` by default.
+
+PowerShell example (Windows):
+
+```
+# from project root
+python .\training\training_ppo.py
+```
 
 ### 2️⃣ Evaluation
 
@@ -82,6 +89,11 @@ Models are saved in models/.
 Place the **ROM** MedarotKabuto.gb and the initial save zero_state.state inside data/ before training.
 
 - **Hyperparameters** (learning rate, gamma, etc.) can be tuned in the scripts under training/.
+
+## 🐞 Troubleshooting
+
+- If you see a FileNotFoundError about the ROM or state: place `MedarotKabuto.gb` and `zero_state.state` inside the `data/` folder at the project root.
+- If PyBoy fails to start under Windows, try running the scripts from PowerShell or an administrator shell and ensure SDL dependencies are available (PyBoy docs have platform notes).
 
 ## 👨‍💻 Author
 
